@@ -7,7 +7,7 @@ close all; %关闭之前数据
 Size_Grid=10;  %雷声监测区域大小，单位：m  
 Room_Length=Size_Grid; %长度
 Room_Width=Size_Grid;  %宽度
-RUNS = 50; %%仿真次数
+RUNS = 1; %%仿真次数
 scale=1;        %%%%%%%%%%%%%%%%%%%%%%%%%%%%可变参数，GM算法的空间离散化步长  网格精度：1/scale
 Microphone_Distance=0.34; %手机上两个mic之间距离 单位m
 measure_alpha=0.75;     %%%切割概率
@@ -29,8 +29,8 @@ Node_Error_NUM_Percent=0.05*test_flag
 ;           %%%%%%%%%%%%%%%%%%%节点量测信息出错的百分比，最大30%，默认值5%
 real_statics_run=floor(RUNS*percent);
 
-anchor_min=7;   %最小节点个数，默认值30
-anchor_max=10;  %最大
+anchor_min=10;   %最小节点个数，默认值30
+anchor_max=15;  %最大
 anchor_gap=1;   %间隔 
 anchors=anchor_min:anchor_gap:anchor_max;  %%%%%%%%%%%%%%%%%%%%%%%%%%可变参数，实验所使用的结点个数
 
@@ -210,8 +210,8 @@ disp(['--------------------------------------------------------- ']);
          
         %新版卡诺图的位置在这里
         %建立起表格之后，麦克风的误差被忽略了，因此定位精度就下降了
-        estimated_location_Kar_2=Karnaugh_Map_Prediction(Node_number,measure_data_with_error,measure_data_probability,Microphone_1_Location_with_error,Microphone_2_Location_with_error,Size_Grid,scale);
-        rmse_K_map_tmp(count) = sqrt( sum((real_speaker_location(:)-estimated_location_Kar_2(:)).^2) );  % 
+       estimated_location_Kar_2=Karnaugh_Map_Prediction(Node_number,measure_data_with_error,measure_data_probability,Microphone_1_Location_with_error,Microphone_2_Location_with_error,Size_Grid,scale);
+       rmse_K_map_tmp(count) = sqrt( sum((real_speaker_location(:)-estimated_location_Kar_2(:)).^2) );  % 
     
 
 %上一段代码进入K了，在此去掉了

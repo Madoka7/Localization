@@ -60,6 +60,12 @@ end
 %到这里获取到了位置的二进制信息。
 %……………………………………………………
 
+%告诉我Bins是怎么把二进制信息剥离的。
+%Bins可以分列获取节点数目的信息啊，然后就做成了公式
+%不用minTruthtable，只用table_x_bin
+
+
+
 %Binxj-分块变量
 %Binx-区分不同位变量
 %Binsx-保存全部位全部公式变量，最后写文件也是它
@@ -67,12 +73,21 @@ end
 Binsx=[];
 Binsy=[];
 Binx=[];
-
+Biny=[];
 for i=1:x_bin_length
     testix=table_x_bin(:,i)';
-    
+    row_nums=length(testix);
 
-    [Binx,inps,Nums,testix] = minTruthtable(testix); 
+    for j=1:row_nums
+        if(testix(j)=='1')
+            for x=1:Node_number
+                certain_row(1,x)=num2str(tt(j,x));
+            end
+            Binx=[Binx;certain_row(1,:)];
+        end
+    end
+
+    
     
     %现在算法的时间复杂度瓶颈就在于这个算法了，9个节点需要近1分钟才能跑出来。
     %如何避免每次都要算，把Bins变成可以存取的数据呢
@@ -83,20 +98,32 @@ for i=1:x_bin_length
         continue;
     end
     Binsx=[Binsx;tag;Binx];
+    Binx=[];
+    
 end
 
 %x和y的索引长度果然还是有区别的
 for i=1:y_bin_length
     testiy=table_y_bin(:,i)';
-    [Biny,inps,Nums,testiy] = minTruthtable(testiy);
+    row_nums=length(testiy);
+
+    for j=1:row_nums
+        if(testiy(j)=='1')
+            for y=1:Node_number
+                certain_row(1,y)=num2str(tt(j,y));
+            end
+            Biny=[Biny;certain_row(1,:)];
+        end
+    end
+    
     %同x
     if(isempty(Binsy))
         Binsy=Biny;
         continue;
     end
     Binsy=[Binsy;tag;Biny];
+    Biny=[];
 end
-
     Binsx=[Binsx;tag];
     Binsy=[Binsy;tag];
     %以上是公式的制作过程，x和y是没有明显逻辑区别的
@@ -125,7 +152,6 @@ end
 for i=1:Node_number
     m_d(i)=num2str(m_d_error(i,1));
 end
-m_d;
 %先准备一下待查序列，变成字符串类型的
 
 sBrx=length(Binsx(:,1));
@@ -160,7 +186,10 @@ count;
 %到这里，查公式的工作也完成了
 %返回值可以很轻松的通过除以10000完成
 %下面的玩意还有没有用完全取决于即将进行的测试
-        
+
+%告诉我tBinx和tBiny是啥。
+%它们是字典。
+
 estimated_location=[x/10000 y/10000];
 
 %2个方向16如分两块15
