@@ -206,11 +206,11 @@ disp(['--------------------------------------------------------- ']);
         %20160828
         %老版卡诺图方法已经不能用了
         %失去了定位的能力
-        %estimated_location_Kar=Karnaugh_Map_Prediction(table_binary,measure_data');
+        %estimated_location_Kar=oldversion_Karnaugh_Map_Prediction(table_binary,measure_data');
          
         %新版卡诺图的位置在这里
         %建立起表格之后，麦克风的误差被忽略了，因此定位精度就下降了
-        estimated_location_Kar_2=Ktest(Node_number,measure_data_with_error,measure_data_probability,Microphone_1_Location_with_error,Microphone_2_Location_with_error,Size_Grid,scale);
+        estimated_location_Kar_2=Karnaugh_Map_Prediction(Node_number,measure_data_with_error,measure_data_probability,Microphone_1_Location_with_error,Microphone_2_Location_with_error,Size_Grid,scale);
         rmse_K_map_tmp(count) = sqrt( sum((real_speaker_location(:)-estimated_location_Kar_2(:)).^2) );  % 
     
 
