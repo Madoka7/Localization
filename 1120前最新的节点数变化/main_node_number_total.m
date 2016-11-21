@@ -30,7 +30,7 @@ Node_Error_NUM_Percent=0.05*test_flag
 real_statics_run=floor(RUNS*percent);
 
 anchor_min=7;   %最小节点个数，默认值30
-anchor_max=8;  %最大
+anchor_max=10;  %最大
 anchor_gap=1;   %间隔 
 anchors=anchor_min:anchor_gap:anchor_max;  %%%%%%%%%%%%%%%%%%%%%%%%%%可变参数，实验所使用的结点个数
 
@@ -226,7 +226,7 @@ disp(['--------------------------------------------------------- ']);
 
          estimated_location_Kar_2
          
-         pause;
+        
          %return;
         
     end
