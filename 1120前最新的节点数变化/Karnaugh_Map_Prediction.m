@@ -47,14 +47,11 @@ table_x_bin=dec2bin(table_x*10000);
 table_y_bin=dec2bin(table_y*10000);
 %这里进行的是列操作，按照这里的惯例，是17列
 
-%计算二进制长度,x和y是一样的
-x_bin_length=length(table_x_bin(1,:));%暂时不用
-y_bin_length=length(table_y_bin(1,:));%暂时不用
+%计算二进制长度
+x_bin_length=length(table_x_bin(1,:));
+y_bin_length=length(table_y_bin(1,:));
 
-%保持一致，x不比y短，以后用x运算
-if x_bin_length<y_bin_length
-    x_bin_length=y_bin_length;
-end
+
 
 %……………………………………………………
 %到这里获取到了位置的二进制信息。
@@ -95,6 +92,7 @@ for i=1:x_bin_length
     %取得时候按照节点数分别取像查字典一样
     if(isempty(Binsx))
         Binsx=Binx;
+        Binx=[];
         continue;
     end
     Binsx=[Binsx;tag;Binx];
@@ -119,6 +117,7 @@ for i=1:y_bin_length
     %同x
     if(isempty(Binsy))
         Binsy=Biny;
+        Biny=[];
         continue;
     end
     Binsy=[Binsy;tag;Biny];
@@ -192,8 +191,7 @@ count;
 
 estimated_location=[x/10000 y/10000];
 
-%2个方向16如分两块15
-%15入拓展成16块
+
 
 %161122 11:29
 %出现8->112768的问题
@@ -204,9 +202,16 @@ estimated_location=[x/10000 y/10000];
 %95000： 10111001100011000
 %127768：11111001100011000
 %可以看见，第二高位出现了奇怪的误差，原因是什么？
-
-
-
-
-
-        
+%第一高位是2的16次方
+%第二高位是2的15次方
+%不认为是转换（自带函数）的问题，因为在minTruthtable版本里没有类似bug
+%在往上就是查表，查表里面逻辑应该没错，不然为什么只错第二位？
+%65536之后就会出现这个问题，为什么？
+%我在想是不是第一次循环（确定最高位）和其他循环有区别？
+%这么多代码我怎么知道哪里不对？
+%一行一行来，num2str肯定没问题
+%要么是表的制作，要么是表的查询，目前怀疑制作的部分大一点。
+%找到问题了，第二高位的表格里面包含了第一高位的数据
+%所以第一高位置1的时候第二高位也变成了1
+%原来是Binsx为空的时候没有把Binx和Biny清空
+%解决了！12：37

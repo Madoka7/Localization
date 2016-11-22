@@ -1,5 +1,4 @@
-dec2bin(80000)
-dec2bin(112768)
-dec2bin(95000)
-dec2bin(127768)
-bin2dec('1000000000000000')
+
+dec2bin(90000)
+dec2bin(122768)
+

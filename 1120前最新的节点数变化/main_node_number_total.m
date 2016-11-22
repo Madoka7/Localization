@@ -29,9 +29,9 @@ Node_Error_NUM_Percent=0.05*test_flag
 ;           %%%%%%%%%%%%%%%%%%%节点量测信息出错的百分比，最大30%，默认值5%
 real_statics_run=floor(RUNS*percent);
 
-anchor_min=3;   %最小节点个数，默认值30
-anchor_max=7;  %最大
-anchor_gap=1;   %间隔 
+anchor_min=20;   %最小节点个数，默认值30
+anchor_max=40;  %最大
+anchor_gap=5;   %间隔 
 anchors=anchor_min:anchor_gap:anchor_max;  %%%%%%%%%%%%%%%%%%%%%%%%%%可变参数，实验所使用的结点个数
 
 estimated_speaker_location_final=zeros(RUNS,2);
